@@ -81,4 +81,58 @@ public class SingleLinkedList {
                System.out.println("Linked List does not exist!");
             System.out.println();
        }
+
+       public void deletionoOfNode(int location){
+           if(!existsLinkedList()){
+               System.out.println("LinkedList does not exist");
+               return;
+           }else if(location == 0){
+               head = head.getNext();
+               setSize(getSize()-1);
+               if(getSize() == 0){
+                   tail = null;
+               }
+           }else if(location >= getSize()){
+               SingleNode temp = head;
+               for(int i = 0 ;i<size-1;i++){
+                   temp = temp.getNext();
+               }
+               if(temp == head){
+                   tail = head = null;
+                   setSize(getSize()-1);
+                   return;
+               }
+               temp.setNext(null);
+               tail = temp;
+               setSize(getSize()-1);
+           }else{
+               SingleNode temp = head;
+               for(int i = 0;i< location-1;i++){
+                   temp = temp.getNext();
+               }
+               temp.setNext(temp.getNext().getNext());
+               setSize(getSize()-1);
+           }
+       }
+
+       void deleteLinkedList(){
+           System.out.println("Deleting Linked List....");
+           head = null;
+           tail = null;
+           System.out.println("Deleted Linked List successfully ...");
+       }
+
+       boolean searchNode(int nodeValue){
+           SingleNode temp = head;
+           while(temp.getNext()!=null){
+               if(temp.getValue() == nodeValue){
+                   System.out.println("Found node");
+                   return true;
+               }
+               temp = temp.getNext();
+           }
+           System.out.println("Node not found");
+           return false;
+       }
+
 }
