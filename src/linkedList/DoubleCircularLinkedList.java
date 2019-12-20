@@ -114,6 +114,11 @@ public class DoubleCircularLinkedList {
             System.out.println("Linked List is already deleted, nothing to delete anymore !");
             return;
         }else {
+            DoubleNode temp = head;
+            for(int i=0;i<getSize();i++){
+                temp.setPrev(null);
+                temp = temp.getNext();
+            }
             head.setPrev(null);
             tail.setNext(null);
             head = null;
