@@ -82,7 +82,7 @@ public class SingleLinkedList {
             System.out.println();
        }
 
-       public void deletionoOfNode(int location){
+       public void deletionOfNode(int location){
            if(!existsLinkedList()){
                System.out.println("LinkedList does not exist");
                return;

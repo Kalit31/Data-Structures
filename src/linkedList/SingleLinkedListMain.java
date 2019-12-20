@@ -34,7 +34,7 @@ public class SingleLinkedListMain {
         System.out.println("\n\nDeleting the node having location = 0: ");
         System.out.println("Before Deletion:");
         list.traverseLinkedList();
-        list.deletionoOfNode(0);
+        list.deletionOfNode(0);
         System.out.println("After Deletion:");
         list.traverseLinkedList();
         System.out.println();
@@ -42,7 +42,7 @@ public class SingleLinkedListMain {
         System.out.println("\n\nDeleting the node having location = 2: ");
         System.out.println("Before Deletion:");
         list.traverseLinkedList();
-        list.deletionoOfNode(2);
+        list.deletionOfNode(2);
         System.out.println("After Deletion:");
         list.traverseLinkedList();
         System.out.println();
@@ -51,7 +51,7 @@ public class SingleLinkedListMain {
         System.out.println("\n\nDeleting the node having location = 100: ");
         System.out.println("Before Deletion:");
         list.traverseLinkedList();
-        list.deletionoOfNode(100);
+        list.deletionOfNode(100);
         System.out.println("After Deletion:");
         list.traverseLinkedList();
         System.out.println();
