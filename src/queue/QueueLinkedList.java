@@ -11,7 +11,7 @@ public class QueueLinkedList {
         list = new SingleLinkedList();
     }
 
-    void enQueue(int value){
+    public void enQueue(int value){
         if(list.getHead()==null) {
             list.createSingleLinkedList(value);
         }else{
@@ -48,5 +48,6 @@ public class QueueLinkedList {
 
     public void deleteStack() {
         list.setHead(null);
+        list.setTail(null);
     }
 }
