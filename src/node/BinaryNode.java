@@ -5,7 +5,16 @@ public class BinaryNode {
     int value;
     BinaryNode left;
     BinaryNode right;
-    int level;
+
+    public int getHeight() {
+        return height;
+    }
+
+    public void setHeight(int height) {
+        this.height = height;
+    }
+
+    int height;
 
     public int getValue() {
         return value;
@@ -31,13 +40,7 @@ public class BinaryNode {
         this.right = right;
     }
 
-    public int getLevel() {
-        return level;
-    }
 
-    public void setLevel(int level) {
-        this.level = level;
-    }
 
     @Override
     public String toString() {
