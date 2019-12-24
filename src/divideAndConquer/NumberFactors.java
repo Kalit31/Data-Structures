@@ -1,9 +1,13 @@
 package divideAndConquer;
 
+//20723155 ns
 public class NumberFactors {
     public static void main(String[] args) {
-        int n=10;
+        int n=100;
+        long start = System.nanoTime();
         System.out.println("Ways to represent "+n+": "+waysToGetN(n));
+        long end = System.nanoTime();
+        System.out.println("\n\nTime to execute this algo: " + (end-start));
     }
 
     public static int waysToGetN(int n){
