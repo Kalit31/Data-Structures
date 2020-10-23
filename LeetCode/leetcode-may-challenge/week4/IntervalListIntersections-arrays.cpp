@@ -1,6 +1,15 @@
 #include <bits/stdc++.h>
 using namespace std;
 
+//Type: Arrays
+//Approach: Let us see the cases when there will be intersections between two lines.
+//          A[i][0]___________________A[i][1]
+//                    B[j][0]__________________B[j][1]
+//          So, if the start of the first line is greater than the end of the second line, we may have to consider the next line in row B.
+//              If the end of first line is less than the start of the second line, we may have to consider the next line in row A.
+//          Else the intersection would be simply the maximum of the starting points and the minimum of the ending points.
+//Complexity: O(N) time
+
 class Solution
 {
 public:

@@ -1,6 +1,11 @@
 #include <bits/stdc++.h>
 using namespace std;
 
+//Type: Arrays
+//Approach: We store the distance of each point and a reference to that point in an array
+//          Sort the array and take away the first k points
+//Complexity: O(NLgN) time
+
 class Solution
 {
 public:

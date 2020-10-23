@@ -1,6 +1,16 @@
 #include <bits/stdc++.h>
 using namespace std;
 
+//Type: Dynamic Programming
+//Approach: We fill the dp table top to bottom
+//          The elements in the first row (word1 is empty), are simply the number of characters till that col (All insertions)
+//          The elements in the first col (word2 is empty), are simply the number of characters till that row (All deletions)
+//          At any other cell in  the table,
+//          If the character of word1 and word2 match, we do not have to perform any operation, and copy the result of the above-left cell.
+//          Else if characters do not match, we may have to find which of the following among the three operations
+//          would yield the minimum.
+//Complexity: O(L1*L2) time and O(L1*L2) space
+
 class Solution
 {
 public:

@@ -1,6 +1,12 @@
 #include <bits/stdc++.h>
 using namespace std;
 
+//Type: Graphs, Cycle detection in Directed Graph
+//Approach: It will be only possible to complete all the courses, if
+//          there is no loop dependency within the courses.
+//          The problem reduces to finding a cycle in graph
+//Complexity: O(List of Courses)
+
 class Solution
 {
 public:

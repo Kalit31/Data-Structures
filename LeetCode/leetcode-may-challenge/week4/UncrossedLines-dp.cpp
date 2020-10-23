@@ -1,6 +1,11 @@
 #include <bits/stdc++.h>
 using namespace std;
 
+//Type: Dynamic Programming
+//Approach: Upon observing the problem closely,
+//           one can find it is a variation of longest common sequence problem
+//Complexity: O(N*M) time and O(N*M) space
+
 class Solution
 {
 public:

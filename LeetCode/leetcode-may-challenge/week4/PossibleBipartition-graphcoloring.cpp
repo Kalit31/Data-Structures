@@ -1,6 +1,13 @@
 #include <bits/stdc++.h>
 using namespace std;
 
+//Type: Graph-Coloring
+//Approach: Create a adjacency list, with an edge between two persons who dislike each other.
+//          The basic idea is to assign one of the 2 colors to each node, s.t.,
+//          all the neighbours of that node have different color.
+//          If such a coloring is not possible, then we may not split the set into 2 groups.
+//Complexity: O(N) time
+
 class Solution
 {
 public:
