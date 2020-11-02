@@ -1,6 +1,13 @@
 #include <bits/stdc++.h>
 using namespace std;
 
+//Type: Dynamic Programming
+//Approach: The basic idea would be to use a bottom up approach, i.e,
+//          calculate the combinations for smaller trees and use it
+//          to find the combinations for larger trees.
+//          For a tree with k nodes, excluding the root, we will have
+//          to arrange the nodes between its left and right subtree.
+
 class Solution
 {
 public:

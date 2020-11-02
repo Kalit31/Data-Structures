@@ -1,6 +1,12 @@
 #include <bits/stdc++.h>
 using namespace std;
 
+//Type: Dynamic Programming
+//Approach: Apply bottom-up dp.
+//          For each cell on the topmost row, the robot must have arrived from left. Hence, 1 possible way.
+//          Similary, for each cell on the leftmost column, it must have arrived from top. Hence, 1 possible way.
+//          For every other cell, we have 2 options. It may come from top or left. Hence, we sum up both the possibilites.
+
 class Solution
 {
 public:

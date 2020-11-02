@@ -1,6 +1,14 @@
 #include <bits/stdc++.h>
 using namespace std;
 
+//Type: Bit Manipulation, Math
+//Approach: Create an array of size 32,
+//          to store the count of set bits at each position for every number.
+//          Now for each of the ith bit, check its mod with 3.
+//          If it is 0, this means that the count is a multiple of 3 or 0,
+//          which indicates, the bit is not set in the required number.
+//          Otherwise, the bit is set.
+
 class Solution
 {
 public:

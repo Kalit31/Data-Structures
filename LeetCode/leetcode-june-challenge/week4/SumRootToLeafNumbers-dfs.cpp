@@ -1,6 +1,12 @@
 #include <bits/stdc++.h>
 using namespace std;
 
+//Type: Trees
+//Approach: We apply a dfs traversal on the root,
+//          maintaing the value formed till the current node.
+//          If the current node is a leaf, add it to the global sum variable,
+//          else continue the traversal.
+
 /**
  * Definition for a binary tree node.*/
 struct TreeNode

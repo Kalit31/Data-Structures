@@ -1,6 +1,13 @@
 #include <bits/stdc++.h>
 using namespace std;
 
+//Type: Tries
+//Approach: Insert all the words of dictionary into the trie.
+//          Now, traverse through the entire board and check if a word be formed starting from the current cell.
+//          The solve function first matches if the current node has the child of particular character.
+//          If we reach the end of the trie word, we have found an acceptable word and insert it into our result.
+//          Else we traverse in all the 4 directions from current cell.
+
 class Solution
 {
 public:

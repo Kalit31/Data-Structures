@@ -1,6 +1,10 @@
 #include <bits/stdc++.h>
 using namespace std;
 
+//Type: Tree Traversal
+//Approach: Apply std BFS algorithm to traverse the tree.
+//Complexity: O(N) time and space, N: number of nodes in tree
+
 /**
  * Definition for a binary tree node.*/
 struct TreeNode
