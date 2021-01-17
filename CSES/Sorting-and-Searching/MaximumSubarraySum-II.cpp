@@ -11,32 +11,39 @@ using namespace std;
 
 void solve()
 {
-    int n, m;
-    cin >> n >> m;
-    multiset<int> s;
+    int n, a, b;
+    cin >> n >> a >> b;
+    vector<ll> arr(n + 1, 0);
     for (int i = 0; i < n; i++)
     {
-        int p;
-        cin >> p;
-        s.insert(p);
+        cin >> arr[i + 1];
+        arr[i + 1] += arr[i];
     }
-    for (int i = 0; i < m; i++)
+    set<array<ll, 2>> s;
+    ll ans = LONG_LONG_MIN;
+    for (int i = 0; i <= n; i++)
     {
-        int t;
-        cin >> t;
-        auto it = s.lower_bound(t + 1);
-
-        if (it == s.begin())
+        deb(i);
+        if (i >= a)
         {
-            cout << "-1" << endl;
+            s.insert({arr[i - a], i - a});
+            cout << "INSERTING: "
+                 << "{" << arr[i - a] << "," << i - a << "}" << endl;
         }
-        else
+        if (s.size())
         {
-            --it;
-            cout << (*it) << endl;
-            s.erase(it);
+            ans = max(arr[i] - (*s.begin())[0], ans);
+            cout << "CALC: " << arr[i] - (*s.begin())[0] << endl;
+            deb(ans);
+        }
+        if (i >= b)
+        {
+            s.erase({arr[i - b], i - b});
+            cout << "ERASING: "
+                 << "{" << arr[i - b] << "," << i - b << "}" << endl;
         }
     }
+    cout << ans << endl;
 }
 
 int main()

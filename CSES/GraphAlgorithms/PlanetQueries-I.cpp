@@ -5,40 +5,29 @@
 #define fast std::ios::sync_with_stdio(false), cin.tie(NULL), cout.tie(NULL);
 #define endl "\n"
 using namespace std;
+const ll INF = 1e17;
+const ll NEGINF = -1 * INF;
 
 // never use endl, it is much slower than "\n"
 // dont mess up with LONG_LONG_MAX/LONG_MAX/INT_MAX
 
 void solve()
 {
-    int n, m;
-    cin >> n >> m;
-    multiset<int> s;
+    ll n, q;
+    cin >> n >> q;
+    vector<ll> t(n);
     for (int i = 0; i < n; i++)
     {
-        int p;
-        cin >> p;
-        s.insert(p);
+        cin >> t[i];
+        t[i]--;
     }
-    for (int i = 0; i < m; i++)
+    ll x, k;
+    for (int i = 0; i < q; i++)
     {
-        int t;
-        cin >> t;
-        auto it = s.lower_bound(t + 1);
-
-        if (it == s.begin())
-        {
-            cout << "-1" << endl;
-        }
-        else
-        {
-            --it;
-            cout << (*it) << endl;
-            s.erase(it);
-        }
+        cin >> x >> k;
+        x--;
     }
 }
-
 int main()
 {
     fast;
@@ -46,9 +35,8 @@ int main()
     freopen("/home/kalit/Desktop/Data Structures-Algo-Competitive/src/codeforces/input.txt", "r", stdin);
     freopen("/home/kalit/Desktop/Data Structures-Algo-Competitive/src/codeforces/output.txt", "w", stdout);
 #endif
-
     int T = 1;
-    // cin >> T;
+    //cin >> T;
     while (T--)
     {
         solve();

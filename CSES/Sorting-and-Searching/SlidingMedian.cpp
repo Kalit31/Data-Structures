@@ -37,52 +37,27 @@ void findMedian()
     for (int i = 0; i < k; i++)
         s.insert(arr[i]);
 
-    if (k & 1)
+    int ans = *s.find_by_order((k - 1) / 2);
+
+    cout << ans << " ";
+
+    for (int i = 0; i < n - k; i++)
     {
 
-        // Value at index k/2
-        // in sorted list.
-        int ans = *s.find_by_order(k / 2);
+        // Erasing Element out of window.
+        s.erase(s.find_by_order(
+            s.order_of_key(
+                arr[i])));
+
+        // Inserting newer element
+        // to the window
+        s.insert(arr[i + k]);
+
+        ans = *s.find_by_order((k - 1) / 2);
 
         cout << ans << " ";
-
-        for (int i = 0; i < n - k; i++)
-        {
-
-            // Erasing Element out of window.
-            s.erase(s.find_by_order(
-                s.order_of_key(
-                    arr[i])));
-
-            // Inserting newer element
-            // to the window
-            s.insert(arr[i + k]);
-
-            // Value at index k/2 in
-            // sorted list.
-            ans = *s.find_by_order(k / 2);
-
-            cout << ans << " ";
-        }
-        cout << endl;
     }
-    else
-    {
-
-        // Getting the two middle
-        // median of sorted list.
-        cout << *s.find_by_order((k + 1) / 2 - 1) << " ";
-
-        for (int i = 0; i < n - k; i++)
-        {
-            s.erase(s.find_by_order(
-                s.order_of_key(arr[i])));
-
-            s.insert(arr[i + k]);
-            cout << *s.find_by_order((k + 1) / 2 - 1) << " ";
-        }
-        cout << endl;
-    }
+    cout << endl;
 }
 
 void solve()

@@ -40,13 +40,11 @@ void solve()
         if (check(k, t, mid))
         {
             ans = mid;
-            //deb(ans);
             h = mid - 1;
         }
         else
         {
             l = mid + 1;
-            //deb(l);
         }
     }
     cout << ans << endl;

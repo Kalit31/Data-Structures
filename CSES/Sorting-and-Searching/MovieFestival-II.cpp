@@ -9,34 +9,47 @@ using namespace std;
 // never use endl, it is much slower than "\n"
 // dont mess up with LONG_LONG_MAX/LONG_MAX/INT_MAX
 
+bool comp(const array<int, 3> &a, const array<int, 3> &b)
+{
+    return a[1] < b[1];
+}
+
 void solve()
 {
-    int n, m;
-    cin >> n >> m;
-    multiset<int> s;
+    ll n, k;
+    cin >> n >> k;
+    vector<array<int, 3>> arr(n);
     for (int i = 0; i < n; i++)
     {
-        int p;
-        cin >> p;
-        s.insert(p);
+        cin >> arr[i][0];
+        cin >> arr[i][1];
+        arr[i][2] = i;
     }
-    for (int i = 0; i < m; i++)
-    {
-        int t;
-        cin >> t;
-        auto it = s.lower_bound(t + 1);
 
-        if (it == s.begin())
+    sort(arr.begin(), arr.end(), comp);
+    set<array<int, 2>> s;
+    vector<int> allocation(n);
+    ll ans = 0;
+    for (int i = 0; i < n; i++)
+    {
+        auto it = s.lower_bound({arr[i][0] + 1});
+        if (it != s.begin())
         {
-            cout << "-1" << endl;
+            --it;
+            allocation[arr[i][2]] = (*it)[1];
+            s.erase(it);
         }
         else
         {
-            --it;
-            cout << (*it) << endl;
-            s.erase(it);
+            allocation[arr[i][2]] = s.size();
+        }
+        if (s.size() < k)
+        {
+            s.insert({arr[i][1], allocation[arr[i][2]]});
+            ans++;
         }
     }
+    cout << ans << endl;
 }
 
 int main()
