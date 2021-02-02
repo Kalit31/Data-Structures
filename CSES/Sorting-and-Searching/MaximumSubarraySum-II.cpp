@@ -13,34 +13,50 @@ void solve()
 {
     int n, a, b;
     cin >> n >> a >> b;
-    vector<ll> arr(n + 1, 0);
+    vector<ll> arr(n, 0);
     for (int i = 0; i < n; i++)
     {
-        cin >> arr[i + 1];
-        arr[i + 1] += arr[i];
+        cin >> arr[i];
     }
-    set<array<ll, 2>> s;
-    ll ans = LONG_LONG_MIN;
-    for (int i = 0; i <= n; i++)
+    ll pre[n] = {0};
+
+    pre[0] = arr[0];
+    for (int i = 1; i < n; i++)
     {
-        deb(i);
-        if (i >= a)
+        pre[i] = pre[i - 1] + arr[i];
+    }
+    multiset<ll> s1;
+
+    s1.insert(0);
+    ll ans = LONG_LONG_MIN;
+
+    ans = max(ans, pre[a - 1]);
+
+    int flag = 0;
+
+    for (int i = a; i < n; i++)
+    {
+
+        if (i - b >= 0)
         {
-            s.insert({arr[i - a], i - a});
-            cout << "INSERTING: "
-                 << "{" << arr[i - a] << "," << i - a << "}" << endl;
+            if (flag == 0)
+            {
+
+                auto it = s1.find(0);
+                s1.erase(it);
+                flag = 1;
+            }
         }
-        if (s.size())
+        if (i - a >= 0)
+            s1.insert(pre[i - a]);
+
+        ans = max(ans,
+                  pre[i] - *s1.begin());
+
+        if (i - b >= 0)
         {
-            ans = max(arr[i] - (*s.begin())[0], ans);
-            cout << "CALC: " << arr[i] - (*s.begin())[0] << endl;
-            deb(ans);
-        }
-        if (i >= b)
-        {
-            s.erase({arr[i - b], i - b});
-            cout << "ERASING: "
-                 << "{" << arr[i - b] << "," << i - b << "}" << endl;
+            auto it = s1.find(pre[i - b]);
+            s1.erase(it);
         }
     }
     cout << ans << endl;

@@ -21,7 +21,7 @@ typedef tree<int, null_type,
 
 // Function to find and return the
 // median of every window of size k
-void findMedian()
+void build()
 {
 
     Ordered_set s;
@@ -37,57 +37,41 @@ void findMedian()
     for (int i = 0; i < k; i++)
         s.insert(arr[i]);
 
-    if (k & 1)
+    ll med = *s.find_by_order((k - 1) / 2);
+
+    ll diff = 0;
+    for (int i = 0; i < k; i++)
+    {
+        diff += abs(arr[i] - med);
+    }
+    cout << diff << " ";
+    for (int i = 0; i < n - k; i++)
     {
 
-        // Value at index k/2
-        // in sorted list.
-        int ans = *s.find_by_order(k / 2);
+        // Erasing Element out of window.
+        s.erase(s.find_by_order(
+            s.order_of_key(
+                arr[i])));
 
-        cout << ans << " ";
+        // Inserting newer element
+        // to the window
+        s.insert(arr[i + k]);
 
-        for (int i = 0; i < n - k; i++)
+        ll medNxt = *s.find_by_order((k - 1) / 2);
+        diff += abs(medNxt - arr[i + k]) - abs(med - arr[i]);
+        if (k % 2 == 0)
         {
-
-            // Erasing Element out of window.
-            s.erase(s.find_by_order(
-                s.order_of_key(
-                    arr[i])));
-
-            // Inserting newer element
-            // to the window
-            s.insert(arr[i + k]);
-
-            // Value at index k/2 in
-            // sorted list.
-            ans = *s.find_by_order(k / 2);
-
-            cout << ans << " ";
+            diff -= medNxt - med;
         }
-        cout << endl;
+        cout << diff << " ";
+        med = medNxt;
     }
-    else
-    {
-
-        // Getting the two middle
-        // median of sorted list.
-        cout << *s.find_by_order((k + 1) / 2 - 1) << " ";
-
-        for (int i = 0; i < n - k; i++)
-        {
-            s.erase(s.find_by_order(
-                s.order_of_key(arr[i])));
-
-            s.insert(arr[i + k]);
-            cout << *s.find_by_order((k + 1) / 2 - 1) << " ";
-        }
-        cout << endl;
-    }
+    cout << endl;
 }
 
 void solve()
 {
-    findMedian();
+    build();
 }
 
 int main()

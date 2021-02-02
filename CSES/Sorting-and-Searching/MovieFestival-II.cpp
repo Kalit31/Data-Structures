@@ -32,7 +32,7 @@ void solve()
     ll ans = 0;
     for (int i = 0; i < n; i++)
     {
-        auto it = s.lower_bound({arr[i][0] + 1});
+        auto it = s.upper_bound({arr[i][0]});
         if (it != s.begin())
         {
             --it;

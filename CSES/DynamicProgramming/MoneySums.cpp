@@ -50,7 +50,7 @@ void solve()
         {
             //do not take the ith coin
             dp[i][j] = dp[i - 1][j];
-            //take the ith coint
+            //take the ith coin
             if (j - x[i - 1] >= 0)
             {
                 dp[i][j] = dp[i][j] || dp[i - 1][j - x[i - 1]];

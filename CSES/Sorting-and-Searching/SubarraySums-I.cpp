@@ -27,7 +27,7 @@ void solve()
         currSum += a[i];
         if (m.find(currSum - x) != m.end())
         {
-            ans++;
+            ans += m[currSum - x];
         }
         m[currSum]++;
     }

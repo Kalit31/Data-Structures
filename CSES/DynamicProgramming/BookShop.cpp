@@ -9,34 +9,15 @@ using namespace std;
 // never use endl, it is much slower than "\n"
 // dont mess up with LONG_LONG_MAX/LONG_MAX/INT_MAX
 
-ll build(vector<ll> &h, vector<ll> &s, map<pair<ll, ll>, ll> &m, ll bookNum, ll moneyLeft)
-{
-    if (moneyLeft <= 0)
-    {
-        return 0;
-    }
-    if (bookNum == h.size())
-    {
-        return 0;
-    }
-    if (m.find({bookNum, moneyLeft}) != m.end())
-    {
-        return m[{bookNum, moneyLeft}];
-    }
-
-    ll pagesRead = build(h, s, m, bookNum + 1, moneyLeft);
-    if (moneyLeft - h[bookNum] >= 0)
-        pagesRead = max(pagesRead, s[bookNum] + build(h, s, m, bookNum + 1, moneyLeft - h[bookNum]));
-    m[{bookNum, moneyLeft}] = pagesRead;
-    return pagesRead;
-}
+int dp[1005][100005];
 
 void solve()
 {
-    ll n, x;
+    memset(dp, 0, sizeof(dp));
+    int n, x;
     cin >> n >> x;
-    vector<ll> h(n);
-    vector<ll> s(n);
+    vector<int> h(n);
+    vector<int> s(n);
     for (int i = 0; i < n; i++)
     {
         cin >> h[i];
@@ -45,19 +26,19 @@ void solve()
     {
         cin >> s[i];
     }
-    map<pair<ll, ll>, ll> m;
-    //cout << build(h, s, m, 0, x) << endl;
-    vector<ll> dp(x + 1, 0);
 
-    for (int i = 0; i < n; i++)
+    for (int i = 1; i <= n; i++)
     {
-        for (int j = x; j >= h[i]; j--)
+        for (int j = 0; j <= x; j++)
         {
-            dp[j] = max(dp[j], dp[j - h[i]] + s[i]);
-            cout << "dp[" << j << "]:" << dp[j] << endl;
+            dp[i][j] = max(dp[i][j], dp[i - 1][j]);
+            if (j >= h[i - 1])
+            {
+                dp[i][j] = max(dp[i][j], dp[i - 1][j - h[i - 1]] + s[i - 1]);
+            }
         }
     }
-    cout << dp[x] << endl;
+    cout << dp[n][x] << endl;
 }
 
 int main()
