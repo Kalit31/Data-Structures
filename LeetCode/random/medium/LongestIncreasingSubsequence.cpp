@@ -63,7 +63,7 @@ public:
     }
 };
 
-//O(N) solution
+//O(N^2) solution
 int lis(const vector<int> &A)
 {
     int n = A.size();
