@@ -15,15 +15,9 @@ class MySolution
 public:
     int maxProfit(vector<int> &prices)
     {
-        ios_base::sync_with_stdio(false);
-        cin.tie(NULL);
         int profit = 0;
-        for (int i = 1; i < prices.size(); i++)
-        {
-            if (prices[i] > prices[i - 1])
-            {
-                profit = profit + prices[i] - prices[i - 1];
-            }
+        for(int i=0;i<prices.size()-1;i++){
+            profit += max(0,prices[i+1]-prices[i]);
         }
         return profit;
     }
