@@ -11,7 +11,9 @@ using namespace std;
 #define all(x) (x).begin(), (x).end()
 #define rall(v) v.rbegin(), v.rend()
 const ll INF = 1e18;
-//const ll NEGINF = -1 * INF;
+const ll NEGINF = -1 * INF;
+#include <ext/pb_ds/assoc_container.hpp>
+using namespace __gnu_pbds;
 
 ll gcd(ll a, ll b)
 {
@@ -38,54 +40,31 @@ ll my_pow(ll a, ll n, ll m = INF)
     return res;
 }
 
-#define double long double
-
-const int N = 2e5 + 5;
-
-//g(i) = a*x+b;
-
-double a[N];
-double b[N];
-bool bad[N];
+template <class T>
+using ordered_set = tree<T, null_type, less<T>, rb_tree_tag, tree_order_statistics_node_update>;
 
 void solve()
 {
-    ll n, m, k;
-    cin >> n >> m >> k;
-
-    ll pt;
-    for (int i = 0; i < k; i++)
+    int n;
+    cin >> n;
+    vector<int> a(n);
+    for (int i = 0; i < n; i++)
     {
-        cin >> pt;
-        bad[pt] = true;
+        cin >> a[i];
     }
-    double c = 0;
-    double v = 0;
-    double sum = 0;
-
-    for (int i = n - 1; i >= 0; i--)
+    ordered_set<int> s;
+    ll ans = 0;
+    for (int i = 0; i < n; i++)
     {
-        if (bad[i])
-        {
-            a[i] = 1.0;
-            b[i] = 0;
-        }
-        else
-        {
-            a[i] = (double)c / m;
-            b[i] = (double)v / m + 1;
-        }
-        sum += bad[i] - bad[i + m];
-        if (sum == m)
-        {
-            cout << -1 << endl;
-            return;
-        }
-        c += a[i] - a[i + m];
-        v += b[i] - b[i + m];
+        ans += (s.size() - s.order_of_key(a[i]));
+        s.insert(a[i]);
     }
-
-    cout << fixed << setprecision(10) << b[0] / (1 - a[0]) << endl;
+    cout << ans << endl;
+    for (int i = 0; i < n - 1; i++)
+    {
+        ans += (n - 1 - 2 * a[i]);
+        cout << ans << endl;
+    }
 }
 
 int main()

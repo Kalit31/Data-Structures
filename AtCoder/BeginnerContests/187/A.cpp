@@ -12,6 +12,7 @@ using namespace std;
 #define rall(v) v.rbegin(), v.rend()
 const ll INF = 1e18;
 //const ll NEGINF = -1 * INF;
+const ll N = 1e6 + 1;
 
 ll gcd(ll a, ll b)
 {
@@ -38,54 +39,23 @@ ll my_pow(ll a, ll n, ll m = INF)
     return res;
 }
 
-#define double long double
-
-const int N = 2e5 + 5;
-
-//g(i) = a*x+b;
-
-double a[N];
-double b[N];
-bool bad[N];
-
 void solve()
 {
-    ll n, m, k;
-    cin >> n >> m >> k;
-
-    ll pt;
-    for (int i = 0; i < k; i++)
+    int a, b;
+    cin >> a >> b;
+    int s1 = 0;
+    int s2 = 0;
+    while (a)
     {
-        cin >> pt;
-        bad[pt] = true;
+        s1 += a % 10;
+        a /= 10;
     }
-    double c = 0;
-    double v = 0;
-    double sum = 0;
-
-    for (int i = n - 1; i >= 0; i--)
+    while (b)
     {
-        if (bad[i])
-        {
-            a[i] = 1.0;
-            b[i] = 0;
-        }
-        else
-        {
-            a[i] = (double)c / m;
-            b[i] = (double)v / m + 1;
-        }
-        sum += bad[i] - bad[i + m];
-        if (sum == m)
-        {
-            cout << -1 << endl;
-            return;
-        }
-        c += a[i] - a[i + m];
-        v += b[i] - b[i + m];
+        s2 += b % 10;
+        b /= 10;
     }
-
-    cout << fixed << setprecision(10) << b[0] / (1 - a[0]) << endl;
+    cout << max(s1, s2) << endl;
 }
 
 int main()
@@ -96,6 +66,7 @@ int main()
     freopen("/home/kalit/Desktop/Data Structures-Algo-Competitive/src/codeforces/output.txt", "w", stdout);
 #endif
     int T = 1;
+    // cin >> T;
     while (T--)
     {
         solve();

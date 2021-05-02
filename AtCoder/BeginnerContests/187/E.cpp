@@ -12,6 +12,7 @@ using namespace std;
 #define rall(v) v.rbegin(), v.rend()
 const ll INF = 1e18;
 //const ll NEGINF = -1 * INF;
+const ll N = 1e6 + 1;
 
 ll gcd(ll a, ll b)
 {
@@ -38,54 +39,71 @@ ll my_pow(ll a, ll n, ll m = INF)
     return res;
 }
 
-#define double long double
-
-const int N = 2e5 + 5;
-
-//g(i) = a*x+b;
-
-double a[N];
-double b[N];
-bool bad[N];
-
 void solve()
 {
-    ll n, m, k;
-    cin >> n >> m >> k;
-
-    ll pt;
-    for (int i = 0; i < k; i++)
+    ll N;
+    cin >> N;
+    vector<pair<ll, ll>> edge(N - 1);
+    vector<vector<ll>> g(N);
+    for (ll i = 0; i < N - 1; i++)
     {
-        cin >> pt;
-        bad[pt] = true;
+        ll a, b;
+        cin >> a >> b;
+        a--;
+        b--;
+        g[a].push_back(b);
+        g[b].push_back(a);
+        edge[i] = {a, b};
     }
-    double c = 0;
-    double v = 0;
-    double sum = 0;
-
-    for (int i = n - 1; i >= 0; i--)
+    vector<ll> depth(N, -1);
+    depth[0] = 0;
+    vector<ll> q = {0};
+    while (q.size())
     {
-        if (bad[i])
+        ll at = q.back();
+        q.pop_back();
+        for (ll i : g[at])
+            if (depth[i] == -1)
+            {
+                depth[i] = depth[at] + 1;
+                q.push_back(i);
+            }
+    }
+    vector<ll> s(N);
+    ll Q;
+    cin >> Q;
+    while (Q--)
+    {
+        ll t, e, x;
+        cin >> t >> e >> x;
+        auto [a, b] = edge[e - 1];
+        if (depth[a] > depth[b])
         {
-            a[i] = 1.0;
-            b[i] = 0;
+            swap(a, b);
+            t ^= 3;
+        }
+        if (t == 1)
+        {
+            s[0] += x;
+            s[b] -= x;
         }
         else
-        {
-            a[i] = (double)c / m;
-            b[i] = (double)v / m + 1;
-        }
-        sum += bad[i] - bad[i + m];
-        if (sum == m)
-        {
-            cout << -1 << endl;
-            return;
-        }
-        c += a[i] - a[i + m];
-        v += b[i] - b[i + m];
+            s[b] += x;
     }
-
-    cout << fixed << setprecision(10) << b[0] / (1 - a[0]) << endl;
+    q = {0};
+    while (q.size())
+    {
+        ll at = q.back();
+        q.pop_back();
+        for (ll i : g[at])
+            if (depth[at] < depth[i])
+            {
+                s[i] += s[at];
+                q.push_back(i);
+            }
+    }
+    for (ll i : s)
+        cout << i << endl;
 }
 
 int main()
