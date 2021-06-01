@@ -22,7 +22,7 @@ ll gcd(ll a, ll b)
     return gcd(b, a % b);
 }
 
-ll my_pow(ll a, ll n, ll m = INF)
+ll modpow(ll a, ll n, ll m = INF)
 {
     ll res = 1;
     while (n)

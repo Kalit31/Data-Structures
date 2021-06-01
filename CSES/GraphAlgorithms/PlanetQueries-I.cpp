@@ -8,26 +8,46 @@ using namespace std;
 const ll INF = 1e17;
 const ll NEGINF = -1 * INF;
 
-// never use endl, it is much slower than "\n"
-// dont mess up with LONG_LONG_MAX/LONG_MAX/INT_MAX
-
 void solve()
 {
-    ll n, q;
+    int n, q;
     cin >> n >> q;
-    vector<ll> t(n);
+    vector<int> t(n);
     for (int i = 0; i < n; i++)
     {
         cin >> t[i];
         t[i]--;
     }
-    ll x, k;
-    for (int i = 0; i < q; i++)
+    vector<vector<int>> parent(n, vector<int>(30));
+
+    for (int i = 0; i < n; i++)
     {
+        parent[i][0] = t[i];
+    }
+    for (int k = 1; k < 30; k++)
+    {
+        for (int i = 0; i < n; i++)
+        {
+            parent[i][k] = parent[parent[i][k - 1]][k - 1];
+        }
+    }
+
+    while (q--)
+    {
+        int x, k;
         cin >> x >> k;
         x--;
+        for (int i = 0; i < 30; i++)
+        {
+            if (k & (1 << i))
+            {
+                x = parent[x][i];
+            }
+        }
+        cout << x + 1 << endl;
     }
 }
+
 int main()
 {
     fast;

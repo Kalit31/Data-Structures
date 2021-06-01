@@ -11,6 +11,8 @@ const ll NEGINF = -1 * INF;
 // never use endl, it is much slower than "\n"
 // dont mess up with LONG_LONG_MAX/LONG_MAX/INT_MAX
 
+//Explanation: https://cp-algorithms.com/graph/finding-negative-cycle-in-graph.html
+
 void solve()
 {
     int n, m;
@@ -44,11 +46,7 @@ void solve()
             }
         }
     }
-    /*for (int i = 0; i < n; i++)
-    {
-        cout << dist[i] << " ";
-    }
-    cout << endl;*/
+
     if (loopNode == -1)
     {
         cout << "NO" << endl;

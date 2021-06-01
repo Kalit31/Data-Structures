@@ -22,7 +22,6 @@ void dfs(vector<vector<int>> &adjList, vector<int> &visited, vector<ll> &dp, int
         {
             dfs(adjList, visited, dp, v);
         }
-
         dp[curr] = (dp[curr] + dp[v]) % mod;
     }
 }

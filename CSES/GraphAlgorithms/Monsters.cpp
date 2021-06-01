@@ -9,54 +9,9 @@ using namespace std;
 // never use endl, it is much slower than "\n"
 // dont mess up with LONG_LONG_MAX/LONG_MAX/INT_MAX
 
-// TLE : to fix
-
 const int di[4] = {1, 0, -1, 0};
 const int dj[4] = {0, -1, 0, 1};
 const char dir[4] = {'D', 'L', 'U', 'R'};
-
-//MultiSource BFS
-void bfsMonster(vector<vector<int>> &grid, vector<array<int, 2>> &monsterPos)
-{
-    int layerSize = 1;
-    int time = 0;
-    queue<array<int, 2>> q;
-    int n = grid.size();
-    int m = grid[0].size();
-    bool visited[n][m];
-    memset(visited, false, sizeof(visited));
-    for (int i = 0; i < monsterPos.size(); i++)
-    {
-        q.push({monsterPos[i][0], monsterPos[i][1]});
-        visited[monsterPos[i][0]][monsterPos[i][1]] = true;
-    }
-    while (!q.empty())
-    {
-        if (layerSize == 0)
-        {
-            layerSize = q.size();
-            time++;
-        }
-        array<int, 2> curr = q.front();
-        q.pop();
-        grid[curr[0]][curr[1]] = time;
-        for (int i = 0; i < 4; i++)
-        {
-            int nextI = curr[0] + di[i];
-            int nextJ = curr[1] + dj[i];
-            if (nextI < 0 || nextI >= n || nextJ < 0 || nextJ >= m || grid[nextI][nextJ] == -1)
-            {
-                continue;
-            }
-            if (!visited[nextI][nextJ])
-            {
-                visited[nextI][nextJ] = true;
-                q.push({nextI, nextJ});
-            }
-        }
-        layerSize--;
-    }
-}
 
 //Single Source BFS
 void bfsMons(vector<vector<int>> &grid, vector<string> &laby, int i, int j)
@@ -102,6 +57,49 @@ void bfsMons(vector<vector<int>> &grid, vector<string> &laby, int i, int j)
     }
 }
 
+//MultiSource BFS
+void bfsMonster(vector<vector<int>> &grid, vector<array<int, 2>> &monsterPos)
+{
+    int layerSize = 1;
+    int time = 0;
+    queue<array<int, 2>> q;
+    int n = grid.size();
+    int m = grid[0].size();
+    bool visited[n][m];
+    memset(visited, false, sizeof(visited));
+    for (int i = 0; i < monsterPos.size(); i++)
+    {
+        q.push({monsterPos[i][0], monsterPos[i][1]});
+        visited[monsterPos[i][0]][monsterPos[i][1]] = true;
+    }
+    while (!q.empty())
+    {
+        if (layerSize == 0)
+        {
+            layerSize = q.size();
+            time++;
+        }
+        array<int, 2> curr = q.front();
+        q.pop();
+        grid[curr[0]][curr[1]] = time;
+        for (int i = 0; i < 4; i++)
+        {
+            int nextI = curr[0] + di[i];
+            int nextJ = curr[1] + dj[i];
+            if (nextI < 0 || nextI >= n || nextJ < 0 || nextJ >= m || grid[nextI][nextJ] == -1)
+            {
+                continue;
+            }
+            if (!visited[nextI][nextJ])
+            {
+                visited[nextI][nextJ] = true;
+                q.push({nextI, nextJ});
+            }
+        }
+        layerSize--;
+    }
+}
+
 void printPath(vector<string> path, int i, int j, int iA, int jA)
 {
     cout << "YES" << endl;
@@ -109,7 +107,6 @@ void printPath(vector<string> path, int i, int j, int iA, int jA)
     while (i != iA || j != jA)
     {
         t += path[i][j];
-        //  deb(t);
         if (path[i][j] == 'U')
         {
             i = i + 1;
@@ -239,21 +236,6 @@ void solve()
         exit(0);
     }
     bfsMonster(laby, monsterPos);
-    /*for (int i = 0; i < monsterPos.size(); i++)
-    {
-        bfsMons(laby, grid, monsterPos[i][0], monsterPos[i][1]);
-    }*/
-    /*for (int i = 0; i < n; i++)
-    {
-        for (int j = 0; j < m; j++)
-        {
-            if (laby[i][j] == -1)
-                cout << "# ";
-            else
-                cout << laby[i][j] << " ";
-        }
-        cout << endl;
-    }*/
     bfs(laby, aI, aJ);
 }
 

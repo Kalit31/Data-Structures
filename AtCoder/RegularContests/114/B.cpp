@@ -18,15 +18,6 @@ using namespace std;
 const ll INF = 1e18;
 const ll NEGINF = -1 * INF;
 
-ll gcd(ll a, ll b)
-{
-    if (b == 0)
-    {
-        return a;
-    }
-    return gcd(b, a % b);
-}
-
 ll my_pow(ll a, ll n, ll m = INF)
 {
     ll res = 1;
@@ -54,7 +45,6 @@ void solve()
         f[i]--;
     }
     vector<int> visited(n);
-    vector<int> t(n, 0);
     int cycles = 0;
     for (int i = 0; i < n; i++)
     {

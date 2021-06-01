@@ -27,22 +27,6 @@ ll gcd(ll a, ll b)
     return gcd(b, a % b);
 }
 
-ll my_pow(ll a, ll n, ll m = INF)
-{
-    ll res = 1;
-    while (n)
-    {
-        if (n % 2)
-        {
-            res = (res * a) % m;
-            n--;
-        }
-        a = (a * a) % m;
-        n /= 2;
-    }
-    return res;
-}
-
 void solve()
 {
     int n;
@@ -73,8 +57,8 @@ void solve()
             notPrimes.push_back(a[i]);
         }
     }
-    ll num = 1;
 
+    ll num = 1;
     for (int i = 1; i <= 50; i++)
     {
         bool poss = true;
@@ -95,7 +79,6 @@ void solve()
             break;
         }
     }
-    //deb(num);
     minNum = (minNum * num) / gcd(minNum, num);
     cout << minNum << endl;
 }

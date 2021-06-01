@@ -47,6 +47,7 @@ void solve()
         cout << dist[i] << " ";
     }
     cout << endl;*/
+    //find negative cycle
     for (int i = 1; i < n; i++)
         for (array<ll, 3> e : edges)
         {
@@ -57,7 +58,6 @@ void solve()
             {
                 continue;
             }
-            dist[v] = max(dist[v], NEGINF);
             if (dist[u] + d < dist[v])
             {
                 dist[v] = NEGINF;

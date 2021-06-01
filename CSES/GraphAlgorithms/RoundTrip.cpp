@@ -10,9 +10,10 @@ using namespace std;
 // dont mess up with LONG_LONG_MAX/LONG_MAX/INT_MAX
 
 //cycle in undirected graph
-void dfs(vector<vector<int>> &adjList, vector<int> &visited, vector<int> &parent, vector<int> &ans, int curr)
+void dfs(vector<vector<int>> &adjList, vector<int> &visited, vector<int> &parent, int curr, int par)
 {
     visited[curr] = 1;
+    parent[curr] = par;
     for (int v : adjList[curr])
     {
         if (v == parent[curr])
@@ -21,12 +22,11 @@ void dfs(vector<vector<int>> &adjList, vector<int> &visited, vector<int> &parent
         }
         if (visited[v] == 0)
         {
-            parent[v] = curr;
-            visited[v] = 1;
-            dfs(adjList, visited, parent, ans, v);
+            dfs(adjList, visited, parent, v, curr);
         }
         else
         {
+            vector<int> ans;
             ans.push_back(v);
             while (curr != v)
             {
@@ -61,11 +61,10 @@ void solve()
     }
     vector<int> visited(n, 0);
     vector<int> parent(n, -1);
-    vector<int> path;
     for (int i = 0; i < n; i++)
     {
         if (visited[i] == 0)
-            dfs(adjList, visited, parent, path, i);
+            dfs(adjList, visited, parent, i, -1);
     }
     cout << "IMPOSSIBLE" << endl;
 }

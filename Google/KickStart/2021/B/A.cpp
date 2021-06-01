@@ -17,6 +17,27 @@ const ll NEGINF = -1 * INF;
 
 void solve()
 {
+    int n;
+    cin >> n;
+    string s;
+    cin >> s;
+    vector<int> result(n, 1);
+    for (int i = 1; i < n; i++)
+    {
+        if (s[i] > s[i - 1])
+        {
+            result[i] = 1 + result[i - 1];
+        }
+        else
+        {
+            result[i] = 1;
+        }
+    }
+    for (int x : result)
+    {
+        cout << x << " ";
+    }
+    cout << endl;
 }
 
 int main()

@@ -13,43 +13,63 @@ const ll NEGINF = -1 * INF;
          Never use an iterator after erasing it
 */
 
-ll dfs(vector<vector<int>> &adjList, vector<bool> &visited, vector<int> &level, vector<int> &color, int currNode)
-{
-    ll currAns = 1;
-    visited[currNode] = true;
+const int N = 21;
 
-    for (int v : adjList[currNode])
+vector<vector<int>> adjList;
+vector<bool> visited;
+vector<int> color;
+vector<int> nodesInComp;
+ll ways = 0;
+
+void dfs(int curr)
+{
+    visited[curr] = true;
+    nodesInComp.push_back(curr);
+    for (int v : adjList[curr])
     {
-        if (level[v] != 0 && level[v] != level[currNode] + 1)
+        if (!visited[v])
         {
-            if (color[v] == color[currNode])
+            dfs(v);
+        }
+    }
+}
+
+void dfs2(int i)
+{
+    if (i == nodesInComp.size())
+    {
+        ways++;
+        return;
+    }
+    int currNode = nodesInComp[i];
+    for (int col = 0; col < 3; col++)
+    {
+        color[currNode] = col;
+        bool ok = true;
+        for (int v : adjList[currNode])
+        {
+            if (color[v] == col)
             {
-                currAns = 0;
+                ok = false;
+                break;
             }
+        }
+        if (!ok)
+        {
             continue;
         }
-        level[v] = level[currNode] + 1;
-        ll ans = 0;
-        for (int currColor = 1; currColor <= 3; currColor++)
-        {
-            if (currColor == color[currNode])
-            {
-                continue;
-            }
-            color[v] = currColor;
-            ans += dfs(adjList, visited, level, color, v);
-            color[v] = 0;
-        }
-        currAns *= ans;
+        dfs2(i + 1);
     }
-    return currAns;
+    color[currNode] = -1;
 }
 
 void solve()
 {
     int n, m;
     cin >> n >> m;
-    vector<vector<int>> adjList(n, vector<int>());
+
+    adjList.resize(n, vector<int>());
+
     int u, v;
     for (int i = 0; i < m; i++)
     {
@@ -59,20 +79,26 @@ void solve()
         adjList[u].push_back(v);
         adjList[v].push_back(u);
     }
-    vector<bool> visited(n, false);
-    vector<int> color(n, 0);
-    vector<int> level(n, 0);
+
+    visited.resize(n, false);
+    color.resize(n, -1);
     ll ans = 1;
+
     for (int i = 0; i < n; i++)
     {
         if (visited[i])
         {
             continue;
         }
-        color[i] = 1;
-        level[i] = 1;
-        ans *= (3 * dfs(adjList, visited, level, color, i));
+        ans = ans * 3;
+        nodesInComp.clear();
+        dfs(i);
+        color[nodesInComp[0]] = 0;
+        ways = 0;
+        dfs2(1);
+        ans = ans * ways;
     }
+
     cout << ans << endl;
 }
 

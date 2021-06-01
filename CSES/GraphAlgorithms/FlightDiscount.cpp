@@ -32,6 +32,9 @@ void solve()
     vector<ll> disc(n, INF);
     disc[0] = 0;
 
+    bool visited[n][2];
+    memset(visited, false, sizeof(visited));
+
     q.push({0, 0, 0});
     while (!q.empty())
     {
@@ -40,20 +43,12 @@ void solve()
         ll d = curr[0];
         ll u = curr[1];
         ll coupon = curr[2];
-        if (coupon == 1)
+
+        if (visited[u][coupon])
         {
-            if (disc[u] < d)
-            {
-                continue;
-            }
+            continue;
         }
-        else
-        {
-            if (dist[u] < d)
-            {
-                continue;
-            }
-        }
+
         for (array<ll, 2> neighbor : adjList[u])
         {
             ll cost = neighbor[0];
@@ -80,6 +75,7 @@ void solve()
                 }
             }
         }
+        visited[u][coupon] = true;
     }
     cout << disc[n - 1] << endl;
 }

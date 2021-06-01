@@ -40,6 +40,14 @@ void solve()
         }
     }
     cout << dp[nl][ml] << endl;
+    /*for (int i = 0; i <= nl; i++)
+    {
+        for (int j = 0; j <= ml; j++)
+        {
+            cout << dp[i][j] << " ";
+        }
+        cout << endl;
+    }*/
 }
 
 int main()

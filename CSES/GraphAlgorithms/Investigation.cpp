@@ -31,6 +31,7 @@ void solve()
     vector<ll> minPathsminCost(n);
     vector<ll> maxPathsminCost(n);
     priority_queue<array<ll, 2>, vector<array<ll, 2>>, greater<array<ll, 2>>> q;
+    vector<bool> visited(n, false);
     q.push({0, 0});
     while (!q.empty())
     {
@@ -38,7 +39,7 @@ void solve()
         q.pop();
         ll d = curr[0];
         ll u = curr[1];
-        if (d > dist[u])
+        if (visited[u])
         {
             continue;
         }
@@ -66,6 +67,7 @@ void solve()
                 q.push({dist[v], v});
             }
         }
+        visited[u] = true;
     }
     cout << dist[n - 1] << " " << paths[n - 1] << " " << minPathsminCost[n - 1] << " " << maxPathsminCost[n - 1] << endl;
 }

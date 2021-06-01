@@ -74,10 +74,6 @@ void solve()
         }
         path[i] = string(m, '.');
     }
-    /*deb(iA);
-    deb(jA);
-    deb(iB);
-    deb(jB);*/
     queue<array<int, 2>> q;
     q.push({iA, jA});
     while (!q.empty())
@@ -97,22 +93,7 @@ void solve()
             path[nextI][nextJ] = dir[k];
         }
     }
-    /*
-    //cout << "HERE" << endl;
-    for (int i = 0; i < n; i++)
-    {
-        for (int j = 0; j < m; j++)
-        {
-            cout << path[i][j];
-        }
-        cout << endl;
-    }
-    cout << path[iB][jB] << endl;
-    cout << path[iB][jB] << endl;
-    deb(iB);
-    deb(jB);
-    deb(iA);
-    deb(jA);*/
+
     if (grid[iB][jB] == '#')
     {
         cout << "YES" << endl;
@@ -120,7 +101,6 @@ void solve()
         while (iB != iA || jB != jA)
         {
             t += path[iB][jB];
-            //  deb(t);
             if (path[iB][jB] == 'U')
             {
                 iB = iB + 1;

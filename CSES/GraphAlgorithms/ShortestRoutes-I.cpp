@@ -9,7 +9,7 @@ using namespace std;
 // never use endl, it is much slower than "\n"
 // dont mess up with LONG_LONG_MAX/LONG_MAX/INT_MAX
 
-//Dijsktra's algorithm
+//Djikstra’s algorithm
 //O(ElogV + V)
 void solve()
 {

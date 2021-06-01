@@ -13,64 +13,12 @@ const ll NEGINF = -1 * INF;
          Never use an iterator after erasing it
 */
 
-const int R = 505;
-const int C = 505;
-
-int dp[R][C];
-
-int build(int x, int y, vector<vector<int>> &a, vector<vector<int>> &b, int r, int c)
-{
-    deb(x);
-    deb(y);
-    if (x < 0 || y < 0 || x >= r || y >= c)
-    {
-        return INT_MAX;
-    }
-
-    if (dp[x][y] != -1)
-    {
-        return dp[x][y];
-    }
-
-    int ans = INT_MAX;
-
-    //come from left
-    //(x,y-1) -> (x,y) with cost a[x][y-1]
-    if (y > 0)
-    {
-        ans = min(ans, build(x, y - 1, a, b, r, c) + a[x][y - 1]);
-    }
-    //come from right
-    //(x,y+1) -> (x,y) with cost a[x][y]
-    if (y < (c - 1))
-    {
-        ans = min(ans, build(x, y + 1, a, b, r, c) + a[x][y]);
-    }
-    // //come from up
-    // //(x-1,y) -> (x,y) with cost b[x-1][y]
-    // if (x > 0)
-    // {
-    //     ans = min(ans, build(x - 1, y, a, b, r, c) + b[x - 1][y]);
-    // }
-
-    // //come from down
-    // for (int row = x + 1; row < r; row++)
-    // {
-    //     ans = min(ans, build(row, y, a, b, r, c) + (1 + row - x));
-    // }
-
-    return dp[x][y] = ans;
-}
 void solve()
 {
     int r, c;
     cin >> r >> c;
     vector<vector<int>> a(r, vector<int>(c - 1));
     vector<vector<int>> b(r - 1, vector<int>(c));
-
-    memset(dp, -1, sizeof(dp));
-
-    dp[0][0] = 0;
 
     for (int i = 0; i < r; i++)
     {
@@ -86,10 +34,67 @@ void solve()
             cin >> b[i][j];
         }
     }
-
-    for (int i = 0; i < r; i++)
-
-        cout << build(r - 1, c - 1, a, b, r, c) << endl;
+    vector<vector<vector<int>>> dist(r, vector<vector<int>>(c, vector<int>(2, INT_MAX)));
+    vector<vector<vector<bool>>> visited(r, vector<vector<bool>>(c, vector<bool>(2, false)));
+    dist[0][0][0] = 0;
+    priority_queue<array<int, 4>, vector<array<int, 4>>, greater<array<int, 4>>> q;
+    q.push({0, 0, 0, 0});
+    while (!q.empty())
+    {
+        auto curr = q.top();
+        q.pop();
+        int d = curr[0];
+        int intmd = curr[1];
+        int x = curr[2];
+        int y = curr[3];
+        //cout << "(" << d << "," << intmd << "," << x << "," << y << ")" << endl;
+        if (visited[x][y][intmd])
+        {
+            continue;
+        }
+        //go right
+        if (y + 1 < c && dist[x][y + 1][0] > d + a[x][y])
+        {
+            dist[x][y + 1][0] = d + a[x][y];
+            q.push({dist[x][y + 1][0], 0, x, y + 1});
+        }
+        //go left
+        if (y > 0 && dist[x][y - 1][0] > d + a[x][y - 1])
+        {
+            dist[x][y - 1][0] = d + a[x][y - 1];
+            q.push({dist[x][y - 1][0], 0, x, y - 1});
+        }
+        //go down
+        if (x + 1 < r && dist[x + 1][y][0] > d + b[x][y])
+        {
+            dist[x + 1][y][0] = d + b[x][y];
+            q.push({dist[x + 1][y][0], 0, x + 1, y});
+        }
+        //go up
+        if (x > 0)
+        {
+            int cost = 1;
+            if (intmd == 0)
+            {
+                //current node is not intmd, it will take 1 cost
+                //to reach an intmd node
+                cost++;
+            }
+            if (dist[x - 1][y][0] > cost + d)
+            {
+                dist[x - 1][y][0] = cost + d;
+                q.push({dist[x - 1][y][0], 1, x - 1, y});
+            }
+            if (dist[x - 1][y][1] > cost + d)
+            {
+                dist[x - 1][y][1] = cost + d;
+                q.push({dist[x - 1][y][1], 1, x - 1, y});
+            }
+        }
+        visited[x][y][intmd] = true;
+    }
+    //distance to normal node at cell(r,c);
+    cout << dist[r - 1][c - 1][0] << endl;
 }
 
 int main()
