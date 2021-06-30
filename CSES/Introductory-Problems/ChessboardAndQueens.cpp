@@ -1,10 +1,10 @@
 #include <bits/stdc++.h>
+using namespace std;
 #define ll long long int
 #define deb(x) cout << #x << " " << x << endl;
 #define mod 1000000007
 #define fast std::ios::sync_with_stdio(false), cin.tie(NULL), cout.tie(NULL);
 #define endl "\n"
-using namespace std;
 
 // never use endl, it is much slower than "\n"
 // dont mess up with LONG_LONG_MAX/LONG_MAX/INT_MAX

@@ -6,7 +6,7 @@
 #define endl "\n"
 using namespace std;
 
-//Djikstra’s algorithm
+//Djikstra's algorithm
 //O(ElogV + V)
 void solve()
 {

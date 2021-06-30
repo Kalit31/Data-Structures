@@ -14,31 +14,6 @@ const ll INF = 1e18;
 //const ll NEGINF = -1 * INF;
 const ll N = 1e6 + 1;
 
-ll gcd(ll a, ll b)
-{
-    if (b == 0)
-    {
-        return a;
-    }
-    return gcd(b, a % b);
-}
-
-ll my_pow(ll a, ll n, ll m = INF)
-{
-    ll res = 1;
-    while (n)
-    {
-        if (n % 2)
-        {
-            res = (res * a) % m;
-            n--;
-        }
-        a = (a * a) % m;
-        n /= 2;
-    }
-    return res;
-}
-
 void solve()
 {
     ll n;

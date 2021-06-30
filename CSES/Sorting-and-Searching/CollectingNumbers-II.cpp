@@ -1,6 +1,3 @@
-#pragma GCC optimize("Ofast")
-#pragma GCC optimization("unroll-loops")
-#pragma GCC target("avx,avx2,fma")
 #include <bits/stdc++.h>
 using namespace std;
 #define ll long long int
@@ -14,106 +11,76 @@ const ll INF = 1e18;
 //const ll NEGINF = -1 * INF;
 const ll N = 1e6 + 1;
 
-ll gcd(ll a, ll b)
-{
-    if (b == 0)
-    {
-        return a;
-    }
-    return gcd(b, a % b);
-}
-
-ll my_pow(ll a, ll n, ll m = INF)
-{
-    ll res = 1;
-    while (n)
-    {
-        if (n % 2)
-        {
-            res = (res * a) % m;
-            n--;
-        }
-        a = (a * a) % m;
-        n /= 2;
-    }
-    return res;
-}
-
 void solve()
 {
     int n, m;
     cin >> n >> m;
-    vector<array<int, 2>> arr(n);
-    vector<int> arr2(n);
+    vector<int> arr(n);
+    vector<int> pos(n + 1);
+
     for (int i = 0; i < n; i++)
     {
-        cin >> arr[i][0];
-        arr2[i] = arr[i][0];
-        arr[i][1] = i;
+        int x;
+        cin >> x;
+        pos[x] = i;
+        arr[i] = x;
     }
-    sort(arr.begin(), arr.end());
-    ll cnt = 1;
 
-    for (int i = 1; i < n; i++)
+    int ans = 1;
+    for (int i = 2; i <= n; i++)
     {
-        if (arr[i][1] < arr[i - 1][1])
+        if (pos[i] < pos[i - 1])
         {
-            cnt++;
+            ans++;
         }
     }
-    int a, b;
+
     while (m--)
     {
+        int a, b;
         cin >> a >> b;
         a--;
         b--;
-        int n1 = arr2[a];
-        int n2 = arr2[b];
-        if (n1 > n2)
+        int e1 = arr[a];
+        int e2 = arr[b];
+
+        set<pair<int, int>> pairsAffected;
+
+        if (e1 > 1)
         {
-            swap(n1, n2);
+            pairsAffected.insert({e1 - 1, e1});
         }
-        int idx1 = arr[n1 - 1][1];
-        int idx2 = arr[n2 - 1][1];
-        if (n1 == 1)
+        if (e1 < n)
         {
-            if (idx1 > arr[n1][1])
-            {
-                cnt--;
-            }
+            pairsAffected.insert({e1, e1 + 1});
         }
-        else
+        if (e2 > 1)
         {
-            if (idx1 < arr[n1 - 2][1])
-            {
-                cnt--;
-            }
-            if (idx1 > arr[n1][1])
-            {
-                cnt--;
-            }
+            pairsAffected.insert({e2 - 1, e2});
         }
-        if (n2 == n)
+        if (e2 < n)
         {
-            if (idx2 < arr[n2 - 2][1])
+            pairsAffected.insert({e2, e2 + 1});
+        }
+
+        for (auto pr : pairsAffected)
+        {
+            if (pos[pr.first] > pos[pr.second])
             {
-                cnt--;
+                ans--;
             }
         }
-        else
+        swap(pos[e1], pos[e2]);
+        swap(arr[a], arr[b]);
+
+        for (auto pr : pairsAffected)
         {
-            if (idx2 < arr[n2 - 2][1])
+            if (pos[pr.first] > pos[pr.second])
             {
-                cnt--;
-            }
-            if (idx2 > arr[n2][1])
-            {
-                cnt--;
+                ans++;
             }
         }
-        // swap(arr[n1-1][1],a)
-        swap(arr2[a], arr2[b]);
-        cout << cnt << endl;
+        cout << ans << endl;
     }
 }
 

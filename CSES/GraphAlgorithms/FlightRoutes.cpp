@@ -39,7 +39,7 @@ const ll NEGINF = -1 * INF;
     }
 */
 
-//Single Source K shortest paths. Dijkstra’s
+//Single Source K shortest paths. Djikstra’s
 void solve()
 {
     int n, m, k;

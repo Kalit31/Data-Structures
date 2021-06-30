@@ -10,7 +10,7 @@ struct TreeNode
     TreeNode(int x) : val(x), left(NULL), right(NULL) {}
 };
 
-//Iteartive, traversing through each node(slow)
+//BFS
 class Solution
 {
 public:
@@ -48,34 +48,26 @@ public:
     }
 };
 
-//Recursive fast
-class Solution
-{
+//DFS
+class Solution {
 public:
-    int sumOfLeftLeaves(TreeNode *root)
-    {
-        if (root == NULL)
-        {
+    
+    int dfs(TreeNode* root){
+        if(root==NULL){
             return 0;
         }
-
-        if (root->left == NULL && root->right == NULL)
-        {
-            return 0;
+        int left = dfs(root->left);
+        int right = dfs(root->right);
+        
+        int ans = left + right;
+        
+        if(root->left && root->left->left == NULL && root->left->right == NULL){
+            ans += root->left->val;    
         }
-
-        int v1 = sumOfLeftLeaves(root->left);
-        int v2 = sumOfLeftLeaves(root->right);
-
-        if (root->left)
-        {
-            TreeNode *node = root->left;
-            if (node->left == NULL && node->right == NULL)
-            {
-                return v1 + v2 + root->left->val;
-            }
-        }
-
-        return v1 + v2;
+        return ans;
+    }
+    
+    int sumOfLeftLeaves(TreeNode* root) {
+        return dfs(root);
     }
 };

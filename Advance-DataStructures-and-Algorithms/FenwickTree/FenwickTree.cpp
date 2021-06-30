@@ -1,6 +1,7 @@
 #include <bits/stdc++.h>
 using namespace std;
 
+//0-based index
 struct FenwickTree
 {
     vector<int> bit; // binary indexed tree

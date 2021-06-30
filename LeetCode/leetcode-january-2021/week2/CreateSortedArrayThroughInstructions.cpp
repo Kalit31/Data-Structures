@@ -1,45 +1,62 @@
 #include <bits/stdc++.h>
 using namespace std;
 #define ll long long int
-#define mod 1000000007;
 
-//Binary Indexed Tree approach
 class Solution
 {
 public:
-    int c[100001];
-
-    void update(int x)
+    struct FenwickTree
     {
-        while (x < 100001)
-        {
-            c[x]++;
-            x += x & -x;
-        }
-    }
+        vector<int> bit; // binary indexed tree
+        int n;
 
-    int get(int x)
-    {
-        int res = 0;
-        while (x > 0)
+        FenwickTree(int n)
         {
-            res += c[x];
-            x -= x & -x;
+            this->n = n;
+            bit.assign(n, 0);
         }
-        return res;
-    }
+
+        FenwickTree(vector<int> a) : FenwickTree(a.size())
+        {
+            for (size_t i = 0; i < a.size(); i++)
+                add(i, a[i]);
+        }
+
+        int sum(int r)
+        {
+            int ret = 0;
+            for (; r >= 0; r = (r & (r + 1)) - 1)
+                ret += bit[r];
+            return ret;
+        }
+
+        int sum(int l, int r)
+        {
+            return sum(r) - sum(l - 1);
+        }
+
+        void add(int idx, int delta)
+        {
+            for (; idx < n; idx = idx | (idx + 1))
+                bit[idx] += delta;
+        }
+    };
 
     int createSortedArray(vector<int> &instructions)
     {
-        ll cost = 0;
+        const int N = 1e5 + 5;
+        FenwickTree tree(N);
+        const int mod = 1e9 + 7;
         int n = instructions.size();
-        memset(c, 0, sizeof(c));
-
-        for (int i = 0; i < n; ++i)
+        ll ans = 0;
+        for (int i = 0; i < n; i++)
         {
-            cost = (cost + min(get(instructions[i] - 1), i - get(instructions[i]))) % mod;
-            update(instructions[i]);
+            ll cntLess = tree.sum(instructions[i] - 1);
+            //cntMore = #(elements addTillNow) - (elements<=instructions[i])
+            ll cntMore = (i - tree.sum(instructions[i]));
+            ans = (ans + min(cntLess, cntMore)) % mod;
+            tree.add(instructions[i], 1);
         }
-        return cost;
+        return ans;
     }
 };

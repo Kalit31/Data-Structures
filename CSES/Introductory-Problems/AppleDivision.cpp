@@ -1,41 +1,41 @@
 #include <bits/stdc++.h>
+using namespace std;
 #define ll long long int
 #define deb(x) cout << #x << " " << x << endl;
 #define mod 1000000007
 #define fast std::ios::sync_with_stdio(false), cin.tie(NULL), cout.tie(NULL);
 #define endl "\n"
-using namespace std;
 
 // never use endl, it is much slower than "\n"
 // dont mess up with LONG_LONG_MAX/LONG_MAX/INT_MAX
-ll minDiff = LONG_LONG_MAX;
-ll totalSum = 0;
-
-void build(vector<ll> &wts, int i, ll currSum)
-{
-    if (i == wts.size())
-    {
-        ll wt2 = totalSum - currSum;
-        minDiff = min(minDiff, abs(currSum - wt2));
-        return;
-    }
-    build(wts, i + 1, currSum);
-    build(wts, i + 1, currSum + wts[i]);
-}
 
 void solve()
 {
-    ll n;
+    int n;
     cin >> n;
-    totalSum = 0;
-    vector<ll> wts(n);
+    vector<ll> p(n);
     for (int i = 0; i < n; i++)
     {
-        cin >> wts[i];
-        totalSum += wts[i];
+        cin >> p[i];
     }
-    ll currSum = 0;
-    build(wts, 0, currSum);
+    ll minDiff = INT_MAX;
+    for (int mask = 0; mask < (1 << n); mask++)
+    {
+        ll sum1 = 0;
+        ll sum2 = 0;
+        for (int i = 0; i < n; i++)
+        {
+            if (mask & (1 << i))
+            {
+                sum1 += p[i];
+            }
+            else
+            {
+                sum2 += p[i];
+            }
+        }
+        minDiff = min(minDiff, abs(sum1 - sum2));
+    }
     cout << minDiff << endl;
 }
 

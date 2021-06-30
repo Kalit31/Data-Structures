@@ -24,6 +24,7 @@ void solve()
     {
         int t;
         cin >> t;
+        //it points to the value >=(t+1)
         auto it = s.lower_bound(t + 1);
 
         if (it == s.begin())
@@ -32,6 +33,39 @@ void solve()
         }
         else
         {
+            //(it-1) would point to value <(t+1) OR <=t
+            --it;
+            cout << (*it) << endl;
+            s.erase(it);
+        }
+    }
+}
+
+void solve2()
+{
+    int n, m;
+    cin >> n >> m;
+    multiset<int> s;
+    for (int i = 0; i < n; i++)
+    {
+        int p;
+        cin >> p;
+        s.insert(p);
+    }
+    for (int i = 0; i < m; i++)
+    {
+        int t;
+        cin >> t;
+        //it points to the value >t
+        auto it = s.upper_bound(t);
+
+        if (it == s.begin())
+        {
+            cout << "-1" << endl;
+        }
+        else
+        {
+            //(it-1) would point to value <=t
             --it;
             cout << (*it) << endl;
             s.erase(it);
@@ -51,7 +85,7 @@ int main()
     // cin >> T;
     while (T--)
     {
-        solve();
+        solve2();
     }
     return 0;
 }
