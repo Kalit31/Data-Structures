@@ -31,3 +31,22 @@ public:
         return dp[m - 1][n - 1];
     }
 };
+
+class Solution {
+public:
+    int uniquePaths(int m, int n) {
+        if(n<m){
+            swap(m,n);
+        }
+        long long int ans = 1;
+        int num=n+m-2;
+        
+        for(int i=1;i<=(m-1);i++){
+            ans = (ans*num);
+            ans = (ans/i);
+            num--;
+        }
+
+        return (int)ans;
+    }
+};

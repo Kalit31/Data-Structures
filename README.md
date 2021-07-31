@@ -1,3 +1,3 @@
-# Competitive Programming Playground
+# cp-playground
 
 

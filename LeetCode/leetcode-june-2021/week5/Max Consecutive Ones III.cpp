@@ -8,30 +8,18 @@ public:
     {
         int n = nums.size();
         int maxLen = 0;
-        int ptr1 = 0;
-        int ptr2 = 0;
         int cnt = 0;
-
-        while (ptr2 < n)
+        int i = 0;
+        for (int j = 0; j < n; j++)
         {
-            while (ptr2 < n && cnt <= k)
-            {
-                cnt += (nums[ptr2] == 0);
-                if (cnt > k)
-                {
-                    ptr2++;
-                    continue;
-                }
-                maxLen = max(maxLen, ptr2 - ptr1 + 1);
-                ptr2++;
-            }
+            cnt += nums[j] == 0;
             while (cnt > k)
             {
-                cnt -= (nums[ptr1] == 0);
-                ptr1++;
+                cnt -= nums[i] == 0;
+                i++;
             }
+            maxLen = max(maxLen, j - i + 1);
         }
-
         return maxLen;
     }
 };

@@ -50,3 +50,63 @@ public:
         return ans;
     }
 };
+
+//Monotonic Stack
+class Solution {
+public:
+    int maximumScore(vector<int>& nums, int k) {
+        int n = nums.size();
+        int ans = 0;
+        
+        vector<int> left(n,-1);
+        stack<int> st;
+    
+        for(int i=0;i<n;i++){
+            if(st.empty()){
+                left[i] = -1;
+            }else if(nums[st.top()]<nums[i]){
+                left[i] = st.top();
+            }else{
+                while(!st.empty() && nums[st.top()]>=nums[i]){
+                    st.pop();
+                }
+                if(!st.empty()){
+                    left[i] = st.top();
+                }
+            }
+            st.push(i);
+        }
+        
+        while(!st.empty()){
+            st.pop();
+        }
+        
+        vector<int> right(n,n);
+    
+        for(int i=n-1;i>=0;i--){
+            if(st.empty()){
+                right[i] = n;
+            }else if(nums[st.top()]<nums[i]){
+                right[i] = st.top();
+            }else{
+                while(!st.empty() && nums[st.top()]>=nums[i]){
+                    st.pop();
+                }
+                if(!st.empty()){
+                    right[i] = st.top();
+                }
+            }
+            st.push(i);
+        }
+        
+        for(int i=0;i<n;i++){
+            int l = left[i]+1;
+            int r = right[i]-1;
+            if(l<=k && k<=r){
+                ans = max(ans,nums[i]*(r-l+1));
+            }
+        }
+        
+        return ans;
+    }
+};

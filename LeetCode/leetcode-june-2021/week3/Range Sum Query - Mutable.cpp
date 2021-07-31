@@ -1,6 +1,57 @@
 #include <bits/stdc++.h>
 using namespace std;
 
+class NumArray {
+public:
+    struct FenwickTree{
+        vector<int> bit; // binary indexed tree
+        int n;
+        
+        void initialize(vector<int> a){
+            this->n = a.size();
+            bit.assign(n, 0);
+            for (size_t i = 0; i < a.size(); i++)
+                add(i, a[i]);
+        }
+
+
+        int sum(int r){
+            int ret = 0;
+            for (; r >= 0; r = (r & (r + 1)) - 1)
+                ret += bit[r];
+            return ret;
+        }
+
+        int sum(int l, int r){
+            return sum(r) - sum(l - 1);
+        }
+
+        void add(int idx, int delta){
+            for (; idx < n; idx = idx | (idx + 1))
+                bit[idx] += delta;
+        }
+    };
+    
+    vector<int> initialNums;
+    FenwickTree tree;
+    
+    NumArray(vector<int>& nums) {
+        tree.initialize(nums);
+        initialNums = nums;
+    }
+    
+    void update(int index, int val) {
+        int old = initialNums[index];
+        initialNums[index] = val;
+        int delta = val - old;
+        tree.add(index,delta);
+    }
+    
+    int sumRange(int left, int right) {
+        return tree.sum(left,right);
+    }
+};
+
 class NumArray
 {
 public:

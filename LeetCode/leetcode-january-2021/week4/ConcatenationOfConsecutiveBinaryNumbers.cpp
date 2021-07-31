@@ -5,7 +5,7 @@ using namespace std;
 class Solution
 {
 public:
-    ll my_pow(ll a, ll n, ll m)
+    ll modpow(ll a, ll n, ll m)
     {
         ll res = 1;
         while (n)
@@ -23,21 +23,20 @@ public:
 
     int concatenatedBinary(int n)
     {
-        long long int mod = 1e9 + 7;
-        long long int ans = 0;
-        long long int mult = 1;
-        for (int i = n; i > 0; i--)
+        const int mod = 1e9 + 7;
+        ll ans = 0;
+        ll mult = 1;
+        for (int i = 1; i <= n; i++)
         {
-            ll temp = (mult * i) % mod;
-            ans = (ans + temp) % mod;
-            int curr = i;
             int len = 0;
+            int curr = i;
             while (curr)
             {
-                curr /= 2;
                 len++;
+                curr /= 2;
             }
-            mult = (mult * my_pow(2, len, mod)) % mod;
+            ans = (ans * modpow(2, len, mod)) % mod;
+            ans = (ans + i) % mod;
         }
         return (int)ans;
     }

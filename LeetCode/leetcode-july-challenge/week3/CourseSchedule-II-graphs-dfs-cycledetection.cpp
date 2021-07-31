@@ -1,6 +1,46 @@
 #include <bits/stdc++.h>
 using namespace std;
 
+class Solution {
+public:
+    vector<int> findOrder(int numCourses, vector<vector<int>>& prerequisites) {
+        vector<int> result;
+        vector<vector<int>> adjList(numCourses,vector<int>());
+        vector<int> indegree(numCourses,0);
+        int n = prerequisites.size();
+        
+        for(int i=0;i<n;i++){
+            adjList[prerequisites[i][1]].push_back(prerequisites[i][0]);
+            indegree[prerequisites[i][0]]++;
+        }
+        
+        queue<int> q;
+        for(int i=0;i<numCourses;i++){
+            if(indegree[i]==0){
+                q.push(i);
+            }
+        }
+        int coursesCompleted = 0;
+        
+        while(!q.empty()){
+            int curr = q.front();
+            q.pop();
+            result.push_back(curr);
+            coursesCompleted++;
+            for(int v:adjList[curr]){
+                indegree[v]--;
+                if(indegree[v]==0){
+                    q.push(v);
+                }
+            }
+        }
+        if(coursesCompleted != numCourses){
+            return vector<int>();
+        }        
+        return result;
+    }
+};
+
 class Solution
 {
 public:
