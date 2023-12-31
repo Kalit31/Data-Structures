@@ -1,48 +1,35 @@
 #include <bits/stdc++.h>
-#define ll long long int
-#define deb(x) cout << #x << " " << x << endl;
-//#define mod 1000000007
-#define fast std::ios::sync_with_stdio(false), cin.tie(NULL), cout.tie(NULL);
-#define endl "\n"
 using namespace std;
-
-// never use endl, it is much slower than "\n"
-// dont mess up with LONG_LONG_MAX/LONG_MAX/INT_MAX
-
-void solve()
-{
-    ll n;
+#define endl "\n"
+ 
+int main(){
+    int n;
     cin >> n;
-    vector<bool> a(n + 1, false);
-    for (ll i = 1; i < n; i++)
-    {
-        ll t;
-        cin >> t;
-        a[t] = true;
+    int xor_sum = 0;
+    for (int i=1;i<n;i++){
+        int x;
+        cin >> x;
+        xor_sum = xor_sum^x;
     }
-    for (ll i = 1; i <= n; i++)
-    {
-        if (!a[i])
-        {
-            cout << i << endl;
-            break;
-        }
+    int total_xor_sum = 0;
+    for (int i=1;i<=n;i++){
+        total_xor_sum = total_xor_sum^i;
     }
+    cout << (xor_sum^total_xor_sum) << endl;
 }
-
-int main()
-{
-    fast;
-    /*#ifndef ONLINE_JUDGE
-    freopen("/home/kalit/Desktop/Data Structures-Algo-Competitive/src/codeforces/input.txt", "r", stdin);
-    freopen("/home/kalit/Desktop/Data Structures-Algo-Competitive/src/codeforces/output.txt", "w", stdout);
-#endif*/
-
-    int T = 1;
-    // cin >> T;
-    while (T--)
-    {
-        solve();
-    }
-    return 0;
-}
+ 
+ 
+/*
+ 
+  1  001
+  2  010
+  3  011
+  4  100
+ 
+     100 
+ 
+  1  001
+  2  010
+  3  011
+     000   
+*/

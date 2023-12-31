@@ -1,78 +1,55 @@
 #include <bits/stdc++.h>
-#define ll long long int
-#define deb(x) cout << #x << " " << x << endl;
-#define mod 1000000007
-#define fast std::ios::sync_with_stdio(false), cin.tie(NULL), cout.tie(NULL);
-#define endl "\n"
 using namespace std;
-
-// never use endl, it is much slower than "\n"
-// dont mess up with LONG_LONG_MAX/LONG_MAX/INT_MAX
-
-void build(multiset<char> chars, set<string> &s, string t)
-{
-    if (chars.empty())
-    {
-        s.insert(t);
-        return;
-    }
-    for (auto it = chars.begin(); it != chars.end(); it++)
-    {
-        multiset<char> tChars = chars;
-        deb(*it);
-        chars.erase(it);
-        build(chars, s, t + *it);
-        chars = tChars;
-        deb(chars.size());
-    }
+#define endl "\n";
+#define mod 1000000007;
+ 
+void build(int len, vector<char>& str, vector<int>& freq){
+   if (str.size() == len){
+      for(char c:str){
+         cout << c;
+      }
+      cout << endl;
+      return;
+   }
+   for(int i=0;i<26;i++){
+      if(freq[i]>0){
+         str.push_back(char('a'+i));
+         freq[i]--;
+         build(len, str, freq);
+         freq[i]++;
+         str.pop_back();
+      }
+   }
+   
 }
-
-void solve()
-{
-    string s;
-    cin >> s;
-    int n = s.size();
-
-    sort(s.begin(), s.end());
-    vector<string> result;
-    do
-    {
-        result.push_back(s);
-    } while (next_permutation(s.begin(), s.end()));
-
-    cout << result.size() << endl;
-    for (string st : result)
-    {
-        cout << st << endl;
-    }
-
-    /* set<string> sList;
-    multiset<char> chars;
-    for (int i = 0; i < n; i++)
-    {
-        chars.insert(s[i]);
-    }
-    build(chars, sList, "");
-    cout << sList.size() << endl;
-    for (auto it = sList.begin(); it != sList.end(); it++)
-    {
-        cout << *it << endl;
-    }*/
+ 
+int factorial(int n){
+   int ans=1;
+   while(n){
+      ans = ans*n;
+      n--;
+   }
+   return ans;
 }
-
-int main()
-{
-    fast;
-#ifndef ONLINE_JUDGE
-    freopen("/home/kalit/Desktop/Data Structures-Algo-Competitive/src/codeforces/input.txt", "r", stdin);
-    freopen("/home/kalit/Desktop/Data Structures-Algo-Competitive/src/codeforces/output.txt", "w", stdout);
-#endif
-
-    int T = 1;
-    //cin >> T;
-    while (T--)
-    {
-        solve();
-    }
-    return 0;
+ 
+int main(){
+   string s;
+   cin >> s;
+   int len=s.size();
+   vector<int> freq(26,0);
+   for (int i=0;i<len;i++){
+      freq[s[i]-'a']++;
+   }
+   int cnt = factorial(len);
+   for (int i=0;i<26;i++){
+      if(freq[i]>1){
+         cnt = cnt/factorial(freq[i]);
+      }
+   }
+   vector<char> currString;
+   cout << cnt << endl;
+   build(len, currString, freq);
+   /*
+   = 5!/3! = 120/6 = 20
+   */
 }

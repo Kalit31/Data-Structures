@@ -1,59 +1,29 @@
 #include <bits/stdc++.h>
-#define ll long long int
-#define deb(x) cout << #x << " " << x << endl;
-//#define mod 1000000007
-#define fast std::ios::sync_with_stdio(false), cin.tie(NULL), cout.tie(NULL);
-#define endl "\n"
 using namespace std;
-
-// never use endl, it is much slower than "\n"
-// dont mess up with LONG_LONG_MAX/LONG_MAX/INT_MAX
-
-void solve()
-{
-    ll y, x;
-    cin >> y >> x;
-    ll side = max(x, y);
-    ll num = (side - 1) * (side - 1);
-    ll ans;
-    if (side % 2)
-    {
-        if (side == y)
-        {
-            ans = num + x;
+#define endl "\n"
+ 
+int main(){
+    int t;
+    cin>>t;
+    while(t){
+        long int r,c;
+        cin >> r >> c;
+        long int max_num = max(r, c);
+        long int ans = (max_num-1)*(max_num-1);
+        if (r>=c){
+            if(r%2==0){
+                ans += r+r-c;
+            }else{
+                ans += c;
+            }
+        }else{
+            if(c%2==0){
+                ans += r;
+            }else{
+                ans += c+c-r;
+            }
         }
-        else
-        {
-            ans = num + 2 * side - y;
-        }
+        cout << ans << endl;
+        t--;
     }
-    else
-    {
-        if (side == x)
-        {
-            ans = num + y;
-        }
-        else
-        {
-            ans = num + 2 * side - x;
-        }
-    }
-    cout << ans << endl;
-}
-
-int main()
-{
-    fast;
-#ifndef ONLINE_JUDGE
-    freopen("/home/kalit/Desktop/Data Structures-Algo-Competitive/src/codeforces/input.txt", "r", stdin);
-    freopen("/home/kalit/Desktop/Data Structures-Algo-Competitive/src/codeforces/output.txt", "w", stdout);
-#endif
-
-    int T;
-    cin >> T;
-    while (T--)
-    {
-        solve();
-    }
-    return 0;
 }
